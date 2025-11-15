@@ -43,14 +43,14 @@ export function createGetTaskTool(storage: Storage) {
         const project = await storage.getProject(task.projectId);
         const projectName = project ? project.name : 'Unknown Project';
 
-        // Get related subtasks for summary
-        const subtasks = await storage.getSubtasks(task.id);
-        const completedSubtasks = subtasks.filter(s => s.completed).length;
+        // Get child tasks for summary
+        const childTasks = await storage.getTaskChildren(task.id);
+        const completedChildTasks = childTasks.filter(t => t.completed || t.status === 'done').length;
 
-        const status = task.completed ? '✅ Completed' : '⏳ Pending';
-        const subtaskSummary = subtasks.length > 0
-          ? `\n**Subtasks:** ${completedSubtasks}/${subtasks.length} completed`
-          : '\n**Subtasks:** None';
+        const taskStatus = task.status || (task.completed ? 'done' : 'pending');
+        const childTaskSummary = childTasks.length > 0
+          ? `\n**Child Tasks:** ${completedChildTasks}/${childTasks.length} completed`
+          : '\n**Child Tasks:** None';
 
         return {
           content: [{
@@ -58,13 +58,20 @@ export function createGetTaskTool(storage: Storage) {
             text: `**${task.name}** (ID: ${task.id})
 
 **Project:** ${projectName}
-**Status:** ${status}
+**Status:** ${taskStatus}
+**Priority:** ${task.priority || 'Not set'}/10
+**Complexity:** ${task.complexity || 'Not set'}/10
+**Completed:** ${task.completed ? 'Yes' : 'No'}
 **Details:** ${task.details}
+**Tags:** ${task.tags?.join(', ') || 'None'}
+**Dependencies:** ${task.dependsOn?.length ? task.dependsOn.join(', ') : 'None'}
+**Estimated Hours:** ${task.estimatedHours || 'Not set'}
+**Actual Hours:** ${task.actualHours || 'Not set'}
 
 **Created:** ${new Date(task.createdAt).toLocaleString()}
-**Last Updated:** ${new Date(task.updatedAt).toLocaleString()}${subtaskSummary}
+**Last Updated:** ${new Date(task.updatedAt).toLocaleString()}${childTaskSummary}
 
-Use list_subtasks with taskId="${task.id}" to see all subtasks for this task.`
+Use list_tasks with parentId="${task.id}" to see all child tasks for this task.`
           }]
         };
       } catch (error) {

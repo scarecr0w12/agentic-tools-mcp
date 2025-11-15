@@ -282,11 +282,13 @@ function analyzeFileForTask(
   }
 
   // Check for implementation patterns
+  // Use RegExp constructor to properly interpolate keywords
+  const keywordPattern = taskKeywords.join('|');
   const implementationPatterns = [
-    /function\s+\w*${taskKeywords.join('|')}\w*/gi,
-    /class\s+\w*${taskKeywords.join('|')}\w*/gi,
-    /const\s+\w*${taskKeywords.join('|')}\w*/gi,
-    /export\s+.*${taskKeywords.join('|')}/gi
+    new RegExp(`function\\s+\\w*(?:${keywordPattern})\\w*`, 'gi'),
+    new RegExp(`class\\s+\\w*(?:${keywordPattern})\\w*`, 'gi'),
+    new RegExp(`const\\s+\\w*(?:${keywordPattern})\\w*`, 'gi'),
+    new RegExp(`export\\s+.*(?:${keywordPattern})`, 'gi')
   ];
 
   for (const pattern of implementationPatterns) {

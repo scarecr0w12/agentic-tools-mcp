@@ -269,15 +269,41 @@ function estimateHours(complexity: number | undefined, taskName: string, context
 
 /**
  * Update task dependencies with actual task IDs
+ * Maps task name references to actual task IDs after creation
  */
 async function updateTaskDependencies(storage: Storage, createdTasks: Task[], dependencyMap: Map<string, string[]>): Promise<void> {
-  // This is a simplified implementation
-  // In a real scenario, you'd need more sophisticated dependency resolution
-  // For now, we'll just clear dependencies since we don't have a way to map them properly
+  // Create a name-to-ID mapping for all created tasks
+  const nameToIdMap = new Map<string, string>();
+  for (const task of createdTasks) {
+    // Use lowercase names for case-insensitive matching
+    nameToIdMap.set(task.name.toLowerCase(), task.id);
+  }
+
+  // Update each task's dependencies
   for (const task of createdTasks) {
     if (dependencyMap.has(task.id)) {
-      // Clear dependencies for now - would need more sophisticated mapping
-      await storage.updateTask(task.id, { dependsOn: [] });
+      const dependencyReferences = dependencyMap.get(task.id) || [];
+      const resolvedDependencies: string[] = [];
+
+      for (const depRef of dependencyReferences) {
+        // Try to resolve dependency by name (case-insensitive)
+        const depId = nameToIdMap.get(depRef.toLowerCase());
+        if (depId) {
+          resolvedDependencies.push(depId);
+        } else {
+          // If not found by name, check if it's already a valid task ID
+          const depTask = await storage.getTask(depRef);
+          if (depTask && depTask.projectId === task.projectId) {
+            resolvedDependencies.push(depRef);
+          }
+          // If neither name nor ID match, skip this dependency (it's invalid)
+        }
+      }
+
+      // Only update if we resolved at least one dependency
+      if (resolvedDependencies.length > 0) {
+        await storage.updateTask(task.id, { dependsOn: resolvedDependencies });
+      }
     }
   }
 }

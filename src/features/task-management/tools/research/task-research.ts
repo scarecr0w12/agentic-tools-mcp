@@ -141,6 +141,7 @@ async function checkExistingMemoriesForTask(
     ];
 
     let relevantMemories: string[] = [];
+    const searchErrors: string[] = [];
 
     for (const term of searchTerms.slice(0, 5)) { // Limit to avoid too many searches
       try {
@@ -151,18 +152,27 @@ async function checkExistingMemoriesForTask(
         });
         relevantMemories.push(...memories.map(m => `• ${m.memory.title}: ${m.memory.content.substring(0, 200)}...`));
       } catch (error) {
-        // Continue if search fails
+        // Collect errors instead of silently ignoring them
+        searchErrors.push(`Search for "${term}" failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
         continue;
       }
     }
 
     if (relevantMemories.length > 0) {
-      return `Found ${relevantMemories.length} relevant memories:\n${relevantMemories.slice(0, 5).join('\n')}`;
+      let result = `Found ${relevantMemories.length} relevant memories:\n${relevantMemories.slice(0, 5).join('\n')}`;
+      if (searchErrors.length > 0) {
+        result += `\n\n⚠️ Some searches encountered errors:\n${searchErrors.join('\n')}`;
+      }
+      return result;
+    }
+
+    if (searchErrors.length > 0) {
+      return `⚠️ Memory search encountered errors:\n${searchErrors.join('\n')}`;
     }
 
     return '';
   } catch (error) {
-    return '';
+    return `⚠️ Error checking memories: ${error instanceof Error ? error.message : 'Unknown error'}`;
   }
 }
 
