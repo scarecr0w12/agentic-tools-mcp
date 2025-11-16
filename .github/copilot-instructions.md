@@ -94,10 +94,10 @@ npm run test:coverage  # Coverage report via v8
 ### Running the Server
 ```bash
 # Project-specific mode (each workspace isolated)
-npx -y @pimzino/agentic-tools-mcp
+npx -y @scarecr0w12/agentic-tools-mcp
 
 # Global mode (single shared workspace)
-npx -y @pimzino/agentic-tools-mcp --claude
+npx -y @scarecr0w12/agentic-tools-mcp --claude
 ```
 
 ### Dashboard Development
@@ -175,14 +175,14 @@ Tools are exposed via MCP SDK's STDIO transport. Example Claude Desktop config:
   "mcpServers": {
     "agentic-tools": {
       "command": "npx",
-      "args": ["-y", "@pimzino/agentic-tools-mcp", "--claude"]
+      "args": ["-y", "@scarecr0w12/agentic-tools-mcp", "--claude"]
     }
   }
 }
 ```
 
 ### VS Code Extension
-Companion extension at `github.com/Pimzino/agentic-tools-mcp-companion` provides GUI for task/memory management. Data syncs via shared file storage.
+Companion extension at `github.com/scarecr0w12/agentic-tools-mcp-companion` provides GUI for task/memory management. Data syncs via shared file storage.
 
 ### Dashboard Communication
 Dashboard backend (`dashboard/backend/`) supervises MCP runtimes:

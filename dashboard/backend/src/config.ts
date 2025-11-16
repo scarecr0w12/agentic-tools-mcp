@@ -23,9 +23,9 @@ export interface DashboardConfig {
 }
 
 function buildDefaultInstance(): InstanceConfig {
-  const args = process.env.MCP_ARGS
-    ? process.env.MCP_ARGS.split(',').map((arg) => arg.trim()).filter(Boolean)
-    : ['-y', '@pimzino/agentic-tools-mcp'];
+  args: process.env.MCP_ARGS?.split(',') ?? isNpmStart
+    ? ['run', 'start']
+    : ['-y', '@scarecr0w12/agentic-tools-mcp'];
 
   if (!args.includes('--stdio')) {
     args.push('--stdio');

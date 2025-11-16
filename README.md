@@ -1,10 +1,10 @@
-# Agentic Tools MCP Server - Expanded
+# Agentic Tools MCP Server
 
-[![npm version](https://badge.fury.io/js/@pimzino%2Fagentic-tools-mcp.svg)](https://badge.fury.io/js/@pimzino%2Fagentic-tools-mcp)
-[![npm downloads](https://img.shields.io/npm/dm/@pimzino/agentic-tools-mcp.svg)](https://www.npmjs.com/package/@pimzino/agentic-tools-mcp)
-[![GitHub stars](https://img.shields.io/github/stars/Pimzino/agentic-tools-mcp.svg)](https://github.com/Pimzino/agentic-tools-mcp/stargazers)
-[![GitHub license](https://img.shields.io/github/license/Pimzino/agentic-tools-mcp.svg)](https://github.com/Pimzino/agentic-tools-mcp/blob/main/LICENSE)
-[![Node.js Version](https://img.shields.io/node/v/@pimzino/agentic-tools-mcp.svg)](https://nodejs.org/)
+[![npm version](https://badge.fury.io/js/@scarecr0w12%2Fagentic-tools-mcp.svg)](https://badge.fury.io/js/@scarecr0w12%2Fagentic-tools-mcp)
+[![npm downloads](https://img.shields.io/npm/dm/@scarecr0w12/agentic-tools-mcp.svg)](https://www.npmjs.com/package/@scarecr0w12/agentic-tools-mcp)
+[![GitHub stars](https://img.shields.io/github/stars/scarecr0w12/agentic-tools-mcp.svg)](https://github.com/scarecr0w12/agentic-tools-mcp/stargazers)
+[![GitHub license](https://img.shields.io/github/license/scarecr0w12/agentic-tools-mcp.svg)](https://github.com/scarecr0w12/agentic-tools-mcp/blob/main/LICENSE)
+[![Node.js Version](https://img.shields.io/node/v/@scarecr0w12/agentic-tools-mcp.svg)](https://nodejs.org/)
 
 A comprehensive Model Context Protocol (MCP) server providing AI assistants with powerful **advanced task management** and **agent memories** capabilities with **project-specific storage**.
 
@@ -12,7 +12,7 @@ A comprehensive Model Context Protocol (MCP) server providing AI assistants with
 
 This MCP server is part of a complete task and memory management ecosystem:
 
-- **🖥️ [VS Code Extension](https://github.com/Pimzino/agentic-tools-mcp-companion)** - Beautiful GUI interface for managing tasks and memories directly in VS Code
+- **🖥️ [VS Code Extension](https://github.com/scarecr0w12/agentic-tools-mcp-companion)** - Beautiful GUI interface for managing tasks and memories directly in VS Code
 - **📊 Dashboard** - Interactive Kanban board for visual task management (launch with `--dashboard` flag)
 - **⚡ MCP Server** (this repository) - Advanced AI agent tools and API for intelligent task management
 
@@ -93,13 +93,16 @@ This MCP server is part of a complete task and memory management ecosystem:
 ### Quick Start
 
 ```bash
-npx -y @pimzino/agentic-tools-mcp
+npx -y @scarecr0w12/agentic-tools-mcp
 ```
 
 ### Global Installation
 
+Or install globally:
+
 ```bash
-npm install -g @pimzino/agentic-tools-mcp
+npm install -g @scarecr0w12/agentic-tools-mcp
+agentic-tools-mcp
 ```
 
 ## Usage
@@ -113,15 +116,17 @@ The MCP server supports two storage modes:
 Data is stored in `.agentic-tools-mcp/` subdirectories within each project's working directory.
 
 ```bash
-npx -y @pimzino/agentic-tools-mcp
+npx -y @scarecr0w12/agentic-tools-mcp
 ```
 
 #### 📊 With Dashboard
 
 Launch the interactive Kanban board dashboard alongside the MCP server:
 
+**Launch with Dashboard**:
+
 ```bash
-npx -y @pimzino/agentic-tools-mcp --dashboard
+npx -y @scarecr0w12/agentic-tools-mcp --dashboard
 ```
 
 The dashboard provides:
@@ -139,8 +144,10 @@ Access the dashboard at:
 
 You can customize the dashboard port:
 
+**Custom Dashboard Port**:
+
 ```bash
-npx -y @pimzino/agentic-tools-mcp --dashboard --dashboard-port 3000
+npx -y @scarecr0w12/agentic-tools-mcp --dashboard --dashboard-port 3000
 ```
 
 #### 🌐 Global Directory Mode
@@ -151,7 +158,7 @@ Use the `--claude` flag to store all data in a standardized global directory:
 - **macOS/Linux**: `~/.agentic-tools-mcp/`
 
 ```bash
-npx -y @pimzino/agentic-tools-mcp --claude
+npx -y @scarecr0w12/agentic-tools-mcp --claude
 ```
 
 **When to use `--claude` flag:**
@@ -171,7 +178,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
   "mcpServers": {
     "agentic-tools": {
       "command": "npx",
-      "args": ["-y", "@pimzino/agentic-tools-mcp"]
+      "args": ["-y", "@scarecr0w12/agentic-tools-mcp"]
     }
   }
 }
@@ -184,7 +191,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
   "mcpServers": {
     "agentic-tools": {
       "command": "npx",
-      "args": ["-y", "@pimzino/agentic-tools-mcp", "--claude"]
+      "args": ["-y", "@scarecr0w12/agentic-tools-mcp", "--claude"]
     }
   }
 }
@@ -199,7 +206,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 1. Open Augment Settings Panel (gear icon)
 2. Add MCP server:
    - **Name**: `agentic-tools`
-   - **Command**: `npx -y @pimzino/agentic-tools-mcp`
+   - **Command**: `npx -y @scarecr0w12/agentic-tools-mcp`
 3. Restart VS Code
 
 #### Global Directory Mode
@@ -207,14 +214,14 @@ npx -y @pimzino/agentic-tools-mcp --claude
 1. Open Augment Settings Panel (gear icon)
 2. Add MCP server:
    - **Name**: `agentic-tools`
-   - **Command**: `npx -y @pimzino/agentic-tools-mcp --claude`
+   - **Command**: `npx -y @scarecr0w12/agentic-tools-mcp --claude`
 3. Restart VS Code
 
 **Features Available**: Task management, agent memories, and text-based search capabilities.
 
 ### With VS Code Extension (Recommended)
 
-For the best user experience, install the [**Agentic Tools MCP Companion**](https://github.com/Pimzino/agentic-tools-mcp-companion) VS Code extension:
+For the best user experience, install the [**Agentic Tools MCP Companion**](https://github.com/scarecr0w12/agentic-tools-mcp-companion) VS Code extension:
 
 1. Clone the companion extension repository
 2. Open it in VS Code and press `F5` to run in development mode
@@ -235,13 +242,13 @@ The server uses STDIO transport and can be integrated with any MCP-compatible cl
 #### Project-Specific Mode
 
 ```bash
-npx -y @pimzino/agentic-tools-mcp
+npx -y @scarecr0w12/agentic-tools-mcp
 ```
 
 #### Global Directory Mode
 
 ```bash
-npx -y @pimzino/agentic-tools-mcp --claude
+npx -y @scarecr0w12/agentic-tools-mcp --claude
 ```
 
 ## Data Models
@@ -514,6 +521,14 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history and release notes.
 
 ## Acknowledgments
 
+### Original Author
+
+This project is a fork and continuation of the original work by **[Pimzino](https://github.com/Pimzino)**. We're grateful for their foundational work in creating this comprehensive MCP server for task management and agent memories.
+
+**Original Repository**: [pimzino/agentic-tools-mcp](https://github.com/pimzino/agentic-tools-mcp)
+
+### Open Source Community
+
 We're grateful to the open-source community and the following projects that make this MCP server possible:
 
 ### Core Technologies
@@ -560,9 +575,9 @@ npm start
 
 ### 🖥️ VS Code Extension
 
-**[Agentic Tools MCP Companion](https://github.com/Pimzino/agentic-tools-mcp-companion)** - A beautiful VS Code extension that provides a GUI interface for this MCP server.
+**[Agentic Tools MCP Companion](https://github.com/scarecr0w12/agentic-tools-mcp-companion)** - A beautiful VS Code extension that provides a GUI interface for this MCP server.
 
-**Key Features:**
+**Key Features:****
 
 - 🎯 **Visual Task Management**: Rich GUI with enhanced task metadata forms
 - 📝 **Enhanced Forms**: Priority, complexity, status, tags, and time tracking
@@ -595,4 +610,4 @@ For issues and questions, please use the GitHub issue tracker.
 
 - 🐛 Report bugs via GitHub issues
 - 💡 Request features via GitHub discussions
-- 🖥️ **VS Code Extension Issues**: Report extension-specific issues at [agentic-tools-mcp-companion](https://github.com/Pimzino/agentic-tools-mcp-companion/issues)
+- 🖥️ **VS Code Extension Issues**: Report extension-specific issues at [agentic-tools-mcp-companion](https://github.com/scarecr0w12/agentic-tools-mcp-companion/issues)

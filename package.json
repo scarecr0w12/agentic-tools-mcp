@@ -1,5 +1,5 @@
 {
-  "name": "@pimzino/agentic-tools-mcp",
+  "name": "@scarecr0w12/agentic-tools-mcp-expanded",
   "version": "1.9.0",
   "description": "A comprehensive MCP server for task management and agent memories with JSON file storage",
   "main": "dist/index.js",
@@ -28,7 +28,7 @@
     "productivity",
     "ai-tools"
   ],
-  "author": "Pimzino",
+  "author": "scarecr0w12",
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
@@ -45,7 +45,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pimzino/agentic-tools-mcp.git"
+    "url": "https://github.com/scarecr0w12/agentic-tools-mcp-expanded.git"
   },
   "files": [
     "dist/**/*",

@@ -1,9 +1,31 @@
 import type { FastifyPluginAsync } from 'fastify';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { join, dirname } from 'node:path';
 import { spawn } from 'node:child_process';
+import { randomUUID } from 'node:crypto';
 import type { DashboardConfig } from '../config.js';
 
 interface ProjectsRoutesDeps {
   config: DashboardConfig;
+}
+
+// Helper to read MCP data files directly
+async function readMcpData(workingDir: string) {
+  try {
+    const dataPath = join(workingDir, '.agentic-tools-mcp', 'tasks', 'tasks.json');
+    const content = await readFile(dataPath, 'utf-8');
+    return JSON.parse(content);
+  } catch (err) {
+    // File doesn't exist yet, return empty structure
+    return { projects: [], tasks: [], migration: { version: '1.0.0', timestamp: new Date().toISOString() } };
+  }
+}
+
+// Helper to write MCP data files directly
+async function writeMcpData(workingDir: string, data: any) {
+  const dataPath = join(workingDir, '.agentic-tools-mcp', 'tasks', 'tasks.json');
+  await mkdir(dirname(dataPath), { recursive: true });
+  await writeFile(dataPath, JSON.stringify(data, null, 2), 'utf-8');
 }
 
 export const projectsRoutes: FastifyPluginAsync<ProjectsRoutesDeps> = async (fastify, opts) => {
@@ -12,7 +34,7 @@ export const projectsRoutes: FastifyPluginAsync<ProjectsRoutesDeps> = async (fas
   // Helper function to call MCP tools
   async function callMcpTool(method: string, params: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      const args = ['-y', '@pimzino/agentic-tools-mcp'];
+      const args = ['-y', '@scarecr0w12/agentic-tools-mcp'];
       const child = spawn('npx', args, {
         cwd: config.instances[0]?.cwd || process.cwd(),
         stdio: ['pipe', 'pipe', 'pipe'],
@@ -56,18 +78,39 @@ export const projectsRoutes: FastifyPluginAsync<ProjectsRoutesDeps> = async (fas
     });
   }
 
+  // Helper to parse MCP tool response and extract structured data
+  function parseMcpResponse(result: any): any {
+    // MCP responses have format: { content: [{ type: 'text', text: '...' }] }
+    if (result?.content?.[0]?.text) {
+      const text = result.content[0].text;
+      // Try to extract JSON from the response text
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          return JSON.parse(jsonMatch[0]);
+        } catch (e) {
+          // Not valid JSON, return as-is
+        }
+      }
+    }
+    return result;
+  }
+
   // List all projects
+    // GET /api/projects - List all projects
   fastify.get('/api/projects', async (request, reply) => {
     try {
-      const workingDirectory = config.instances[0]?.cwd || process.cwd();
-      const result = await callMcpTool('tools/call', {
-        name: 'list_projects',
-        arguments: { workingDirectory },
-      });
-      return result;
+      const workingDir = process.cwd();
+      const data = await readMcpData(workingDir);
+      
+      // Return projects array directly
+      return reply.send(data.projects || []);
     } catch (err) {
-      fastify.log.error(err);
-      return reply.status(500).send({ error: 'Failed to list projects' });
+      request.log.error({ err }, 'Failed to list projects');
+      return reply.status(500).send({ 
+        error: 'Failed to list projects',
+        message: err instanceof Error ? err.message : 'Unknown error'
+      });
     }
   });
 
@@ -118,15 +161,21 @@ export const projectsRoutes: FastifyPluginAsync<ProjectsRoutesDeps> = async (fas
   fastify.get('/api/projects/:id/tasks', async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
-      const workingDirectory = config.instances[0]?.cwd || process.cwd();
-      const result = await callMcpTool('tools/call', {
-        name: 'list_tasks',
-        arguments: { workingDirectory, projectId: id, showHierarchy: false },
-      });
-      return result;
+      const workingDir = process.cwd();
+      const data = await readMcpData(workingDir);
+      
+      // Filter tasks by projectId and return only root-level tasks (no parentId)
+      const projectTasks = (data.tasks || []).filter((task: any) => 
+        task.projectId === id && !task.parentId
+      );
+      
+      return reply.send(projectTasks);
     } catch (err) {
-      fastify.log.error(err);
-      return reply.status(500).send({ error: 'Failed to list tasks' });
+      request.log.error({ err }, 'Failed to list tasks');
+      return reply.status(500).send({ 
+        error: 'Failed to list tasks',
+        message: err instanceof Error ? err.message : 'Unknown error'
+      });
     }
   });
 
@@ -153,20 +202,39 @@ export const projectsRoutes: FastifyPluginAsync<ProjectsRoutesDeps> = async (fas
     try {
       const { projectId } = request.params as { projectId: string };
       const body = request.body as any;
-      const workingDirectory = config.instances[0]?.cwd || process.cwd();
+      const workingDir = process.cwd();
       
-      const result = await callMcpTool('tools/call', {
-        name: 'create_task',
-        arguments: {
-          workingDirectory,
-          projectId,
-          ...body,
-        },
-      });
-      return result;
+      const data = await readMcpData(workingDir);
+      
+      // Create new task
+      const newTask = {
+        id: randomUUID(),
+        projectId,
+        name: body.name,
+        details: body.details,
+        status: body.status || 'pending',
+        priority: body.priority || 5,
+        complexity: body.complexity || 5,
+        estimatedHours: body.estimatedHours || 0,
+        tags: body.tags || [],
+        dependsOn: body.dependsOn || [],
+        parentId: body.parentId || undefined,
+        completed: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        level: 0
+      };
+      
+      data.tasks.push(newTask);
+      await writeMcpData(workingDir, data);
+      
+      return reply.send(newTask);
     } catch (err) {
-      fastify.log.error(err);
-      return reply.status(500).send({ error: 'Failed to create task' });
+      request.log.error({ err }, 'Failed to create task');
+      return reply.status(500).send({ 
+        error: 'Failed to create task',
+        message: err instanceof Error ? err.message : 'Unknown error'
+      });
     }
   });
 
@@ -193,21 +261,31 @@ export const projectsRoutes: FastifyPluginAsync<ProjectsRoutesDeps> = async (fas
   }, async (request, reply) => {
     try {
       const { id } = request.params as { id: string };
-      const body = request.body as any;
-      const workingDirectory = config.instances[0]?.cwd || process.cwd();
+      const updates = request.body as any;
+      const workingDir = process.cwd();
       
-      const result = await callMcpTool('tools/call', {
-        name: 'update_task',
-        arguments: {
-          workingDirectory,
-          id,
-          ...body,
-        },
-      });
-      return result;
+      const data = await readMcpData(workingDir);
+      const taskIndex = data.tasks.findIndex((t: any) => t.id === id);
+      
+      if (taskIndex === -1) {
+        return reply.status(404).send({ error: 'Task not found' });
+      }
+      
+      // Update task
+      data.tasks[taskIndex] = {
+        ...data.tasks[taskIndex],
+        ...updates,
+        updatedAt: new Date().toISOString()
+      };
+      
+      await writeMcpData(workingDir, data);
+      return reply.send(data.tasks[taskIndex]);
     } catch (err) {
-      fastify.log.error(err);
-      return reply.status(500).send({ error: 'Failed to update task' });
+      request.log.error({ err }, 'Failed to update task');
+      return reply.status(500).send({ 
+        error: 'Failed to update task',
+        message: err instanceof Error ? err.message : 'Unknown error'
+      });
     }
   });
 

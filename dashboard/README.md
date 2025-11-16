@@ -34,8 +34,10 @@ An interactive web dashboard for visual task management with Kanban board, real-
 
 The easiest way to launch the dashboard is directly from the MCP server:
 
+### Quick Start
+
 ```bash
-npx -y @pimzino/agentic-tools-mcp --dashboard
+npx -y @scarecr0w12/agentic-tools-mcp --dashboard
 ```
 
 This automatically starts both backend and frontend servers.
@@ -73,7 +75,7 @@ npm run dev
 **MCP Instance Config**:
 
 - `MCP_COMMAND` - Command to run MCP (default `npx`)
-- `MCP_ARGS` - Comma-separated arguments (default `-y,@pimzino/agentic-tools-mcp`)
+- `MCP_ARGS` - Comma-separated arguments (default `-y,@scarecr0w12/agentic-tools-mcp`)
 - `MCP_WORKING_DIRECTORY` - Working directory for MCP instance
 - `MCP_LABEL` - Display name for instance (default `Local MCP`)
 - `MCP_AUTORESTART=1` - Auto-restart on crash

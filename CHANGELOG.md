@@ -97,14 +97,18 @@ This release introduces full dashboard integration with the MCP server, providin
 
 **Launch with Dashboard**:
 
+**Launch Both Services:**
+
 ```bash
-npx -y @pimzino/agentic-tools-mcp --dashboard
+npx -y @scarecr0w12/agentic-tools-mcp --dashboard
 ```
 
 **Custom Dashboard Port**:
 
+**Custom Backend Port:**
+
 ```bash
-npx -y @pimzino/agentic-tools-mcp --dashboard --dashboard-port 3000
+npx -y @scarecr0w12/agentic-tools-mcp --dashboard --dashboard-port 3000
 ```
 
 **Access Dashboard**:

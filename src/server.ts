@@ -86,7 +86,7 @@ export async function createServer(config: StorageConfig = {
 }): Promise<McpServer> {
   // Create MCP server with dynamic version from package.json
   const server = new McpServer({
-    name: '@pimzino/agentic-tools-mcp',
+    name: '@scarecr0w12/agentic-tools-mcp',
     version: getVersion()
   });
 
