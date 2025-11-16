@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSocket } from '../hooks/use-socket.ts';
 import { InstancesPanel } from '../widgets/instances-panel.tsx';
 import { LogsPanel } from '../widgets/logs-panel.tsx';
-import { TaskQueuePanel } from '../widgets/task-queue-panel.tsx';
+import { KanbanBoard } from '../widgets/kanban-board.tsx';
 import { MetricsPanel } from '../widgets/metrics-panel.tsx';
 
 export function Layout() {
@@ -32,19 +32,19 @@ export function Layout() {
         </button>
       </header>
       <main className="grid grid-rows-[auto,1fr] gap-4 p-4">
-        <section className="bg-slate-900 rounded-xl border border-slate-800 p-4 overflow-y-auto">
-          <MetricsPanel />
-        </section>
-        <section className="grid lg:grid-cols-4 gap-4">
-          <section className="lg:col-span-1 bg-slate-900 rounded-xl border border-slate-800 p-4 overflow-y-auto">
+        <section className="grid lg:grid-cols-3 gap-4">
+          <section className="bg-slate-900 rounded-xl border border-slate-800 p-4 overflow-y-auto">
+            <MetricsPanel />
+          </section>
+          <section className="bg-slate-900 rounded-xl border border-slate-800 p-4 overflow-y-auto">
             <InstancesPanel />
           </section>
-          <section className="lg:col-span-1 bg-slate-900 rounded-xl border border-slate-800 p-4 overflow-y-auto">
-            <TaskQueuePanel />
-          </section>
-          <section className="lg:col-span-2 bg-slate-900 rounded-xl border border-slate-800 p-4 overflow-y-auto">
+          <section className="bg-slate-900 rounded-xl border border-slate-800 p-4 overflow-y-auto">
             <LogsPanel />
           </section>
+        </section>
+        <section className="bg-slate-900 rounded-xl border border-slate-800 p-4 overflow-hidden">
+          <KanbanBoard />
         </section>
       </main>
     </div>

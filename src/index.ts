@@ -4,6 +4,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { createServer } from './server.js';
 import { getVersionString } from './utils/version.js';
 import { parseCommandLineArgs } from './utils/storage-config.js';
+import { launchDashboard, stopDashboard } from './utils/dashboard-launcher.js';
 
 /**
  * Main entry point for the MCP task management server
@@ -45,6 +46,11 @@ async function main() {
     console.error('   • JSON file storage with title/content architecture');
     console.error('');
     console.error('💡 Use list_projects to get started with tasks, or create_memory for memories!');
+    
+    // Launch dashboard if requested
+    if (storageConfig.launchDashboard) {
+      await launchDashboard(storageConfig.dashboardPort);
+    }
   } catch (error) {
     console.error('❌ Failed to start MCP server:', error);
     process.exit(1);
@@ -52,13 +58,15 @@ async function main() {
 }
 
 // Handle graceful shutdown
-process.on('SIGINT', () => {
+process.on('SIGINT', async () => {
   console.error('\n👋 Shutting down MCP server...');
+  await stopDashboard();
   process.exit(0);
 });
 
-process.on('SIGTERM', () => {
+process.on('SIGTERM', async () => {
   console.error('\n👋 Shutting down MCP server...');
+  await stopDashboard();
   process.exit(0);
 });
 

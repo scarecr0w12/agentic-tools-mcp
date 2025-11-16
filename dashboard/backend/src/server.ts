@@ -7,6 +7,7 @@ import { McpBridge } from './services/mcp-bridge.js';
 import { SocketGateway } from './ws/gateway.js';
 import { instancesRoutes } from './routes/instances.js';
 import { tasksRoutes } from './routes/tasks.js';
+import { projectsRoutes } from './routes/projects.js';
 import { MockDataService } from './services/mock-data.js';
 
 export interface ServerContext {
@@ -38,6 +39,7 @@ export async function buildServer(config: DashboardConfig): Promise<ServerContex
 
   await app.register(instancesRoutes, { store, bridge, config });
   await app.register(tasksRoutes, { store });
+  await app.register(projectsRoutes, { config });
 
   gateway.attach(app.server);
 

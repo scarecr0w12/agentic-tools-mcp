@@ -79,7 +79,11 @@ function wrapToolHandler<TParams extends { workingDirectory: string }, TResult>(
 /**
  * Create and configure the MCP server for task management and agent memories
  */
-export async function createServer(config: StorageConfig = { useGlobalDirectory: false }): Promise<McpServer> {
+export async function createServer(config: StorageConfig = { 
+  useGlobalDirectory: false,
+  launchDashboard: false,
+  dashboardPort: 4800
+}): Promise<McpServer> {
   // Create MCP server with dynamic version from package.json
   const server = new McpServer({
     name: '@pimzino/agentic-tools-mcp',

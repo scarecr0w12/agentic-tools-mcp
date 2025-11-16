@@ -13,13 +13,15 @@ A comprehensive Model Context Protocol (MCP) server providing AI assistants with
 This MCP server is part of a complete task and memory management ecosystem:
 
 - **🖥️ [VS Code Extension](https://github.com/Pimzino/agentic-tools-mcp-companion)** - Beautiful GUI interface for managing tasks and memories directly in VS Code
+- **📊 Dashboard** - Interactive Kanban board for visual task management (launch with `--dashboard` flag)
 - **⚡ MCP Server** (this repository) - Advanced AI agent tools and API for intelligent task management
 
-> **💡 Pro Tip**: Use both together for the ultimate productivity experience! The VS Code extension provides a visual interface while the MCP server enables AI assistant integration with advanced features like PRD parsing, task recommendations, and research capabilities.
+> **💡 Pro Tip**: Use all three together for the ultimate productivity experience! The VS Code extension provides a visual interface, the dashboard offers a web-based Kanban board, and the MCP server enables AI assistant integration with advanced features like PRD parsing, task recommendations, and research capabilities.
 
 ## Features
 
 ### 🎯 Advanced Task Management System with Unlimited Hierarchy (v1.8.0)
+
 - **Projects**: Organize work into distinct projects with descriptions
 - **Unified Task Model**: Single task interface supporting unlimited nesting depth
 - **Unlimited Hierarchy**: Tasks → Subtasks → Sub-subtasks → infinite depth nesting
@@ -38,6 +40,7 @@ This MCP server is part of a complete task and memory management ecosystem:
 - **Git-Trackable**: Task data can be committed alongside your code
 
 ### 🧠 Agent Memories System
+
 - **Persistent Memory**: Store and retrieve agent memories with titles and detailed content
 - **Intelligent Search**: Multi-field text search with relevance scoring across titles, content, and categories
 - **Smart Ranking**: Advanced scoring algorithm prioritizes title matches (60%), content matches (30%), and category bonuses (20%)
@@ -48,6 +51,7 @@ This MCP server is part of a complete task and memory management ecosystem:
 ### 🔧 MCP Tools Available
 
 #### Project Management
+
 - `list_projects` - View all projects in a working directory
 - `create_project` - Create a new project in a working directory
 - `get_project` - Get detailed project information
@@ -55,6 +59,7 @@ This MCP server is part of a complete task and memory management ecosystem:
 - `delete_project` - Delete project and all associated data
 
 #### Task Management (Unlimited Hierarchy v1.8.0)
+
 - `list_tasks` - View tasks in hierarchical tree format with unlimited depth visualization
 - `create_task` - Create tasks at any hierarchy level with `parentId` (supports unlimited nesting)
 - `get_task` - Get detailed task information including hierarchy relationships
@@ -64,6 +69,7 @@ This MCP server is part of a complete task and memory management ecosystem:
 - `migrate_subtasks` - Automatic migration tool for converting legacy subtasks to unified model
 
 #### Advanced Task Management (AI Agent Tools)
+
 - `parse_prd` - Parse Product Requirements Documents and automatically generate structured tasks
 - `get_next_task_recommendation` - Get intelligent task recommendations based on dependencies, priorities, and complexity
 - `analyze_task_complexity` - Analyze task complexity and suggest breaking down overly complex tasks
@@ -72,6 +78,7 @@ This MCP server is part of a complete task and memory management ecosystem:
 - `generate_research_queries` - Generate intelligent, targeted web search queries for task research
 
 #### Agent Memory Management
+
 - `create_memory` - Store new memories with title and detailed content
 - `search_memories` - Find memories using intelligent multi-field search with relevance scoring
 - `get_memory` - Get detailed memory information
@@ -84,11 +91,13 @@ This MCP server is part of a complete task and memory management ecosystem:
 ## Installation
 
 ### Quick Start
+
 ```bash
 npx -y @pimzino/agentic-tools-mcp
 ```
 
 ### Global Installation
+
 ```bash
 npm install -g @pimzino/agentic-tools-mcp
 ```
@@ -100,14 +109,44 @@ npm install -g @pimzino/agentic-tools-mcp
 The MCP server supports two storage modes:
 
 #### 📁 Project-Specific Mode (Default)
+
 Data is stored in `.agentic-tools-mcp/` subdirectories within each project's working directory.
 
 ```bash
 npx -y @pimzino/agentic-tools-mcp
 ```
 
+#### 📊 With Dashboard
+
+Launch the interactive Kanban board dashboard alongside the MCP server:
+
+```bash
+npx -y @pimzino/agentic-tools-mcp --dashboard
+```
+
+The dashboard provides:
+
+- **Interactive Kanban Board** - Drag and drop tasks between columns (To Do, In Progress, Blocked, Done)
+- **Real-Time Metrics** - CPU and memory usage monitoring
+- **Live Logs** - View MCP server output and events
+- **Task Management** - Create, update, and delete tasks with full metadata
+- **Project Switching** - Easily switch between different projects
+
+Access the dashboard at:
+
+- Backend: `http://localhost:4800`
+- Frontend: `http://localhost:5173`
+
+You can customize the dashboard port:
+
+```bash
+npx -y @pimzino/agentic-tools-mcp --dashboard --dashboard-port 3000
+```
+
 #### 🌐 Global Directory Mode
+
 Use the `--claude` flag to store all data in a standardized global directory:
+
 - **Windows**: `C:\Users\{username}\.agentic-tools-mcp\`
 - **macOS/Linux**: `~/.agentic-tools-mcp/`
 
@@ -116,6 +155,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 ```
 
 **When to use `--claude` flag:**
+
 - With Claude Desktop client (non-project-specific usage)
 - When you want a single global workspace for all tasks and memories
 - For AI assistants that work across multiple projects
@@ -125,6 +165,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 ### With Claude Desktop
 
 #### Project-Specific Mode (Default)
+
 ```json
 {
   "mcpServers": {
@@ -137,6 +178,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 ```
 
 #### Global Directory Mode (Recommended for Claude Desktop)
+
 ```json
 {
   "mcpServers": {
@@ -153,6 +195,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 ### With AugmentCode
 
 #### Project-Specific Mode (Default)
+
 1. Open Augment Settings Panel (gear icon)
 2. Add MCP server:
    - **Name**: `agentic-tools`
@@ -160,6 +203,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 3. Restart VS Code
 
 #### Global Directory Mode
+
 1. Open Augment Settings Panel (gear icon)
 2. Add MCP server:
    - **Name**: `agentic-tools`
@@ -169,6 +213,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 **Features Available**: Task management, agent memories, and text-based search capabilities.
 
 ### With VS Code Extension (Recommended)
+
 For the best user experience, install the [**Agentic Tools MCP Companion**](https://github.com/Pimzino/agentic-tools-mcp-companion) VS Code extension:
 
 1. Clone the companion extension repository
@@ -176,6 +221,7 @@ For the best user experience, install the [**Agentic Tools MCP Companion**](http
 3. Enjoy a beautiful GUI interface for all task and memory management
 
 **Benefits of using both together:**
+
 - 🎯 **Visual Task Management**: Rich forms with priority, complexity, status, tags, and time tracking
 - 🎨 **Enhanced UI**: Status emojis, priority badges, and visual indicators
 - 🔄 **Real-time Sync**: Changes in VS Code instantly available to AI assistants
@@ -183,14 +229,17 @@ For the best user experience, install the [**Agentic Tools MCP Companion**](http
 - 🤖 **AI Collaboration**: Human planning with AI execution for optimal productivity
 
 ### With Other MCP Clients
+
 The server uses STDIO transport and can be integrated with any MCP-compatible client:
 
 #### Project-Specific Mode
+
 ```bash
 npx -y @pimzino/agentic-tools-mcp
 ```
 
 #### Global Directory Mode
+
 ```bash
 npx -y @pimzino/agentic-tools-mcp --claude
 ```
@@ -198,6 +247,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 ## Data Models
 
 ### Project
+
 ```typescript
 {
   id: string;           // Unique identifier
@@ -209,6 +259,7 @@ npx -y @pimzino/agentic-tools-mcp --claude
 ```
 
 ### Task (Unified Model v1.8.0 - Unlimited Hierarchy)
+
 ```typescript
 {
   id: string;                    // Unique identifier
@@ -235,9 +286,11 @@ npx -y @pimzino/agentic-tools-mcp --claude
 ```
 
 ### Legacy Subtask (Deprecated in v1.8.0)
+
 The separate Subtask interface has been replaced by the unified Task model. Legacy subtasks are automatically migrated to tasks with `parentId` field. This ensures unlimited hierarchy depth while maintaining all rich features at every level.
 
 ### Memory
+
 ```typescript
 {
   id: string;                    // Unique identifier
@@ -253,6 +306,7 @@ The separate Subtask interface has been replaced by the unified Task model. Lega
 ## Example Workflow
 
 1. **Create a Project**
+
    ```
    Use create_project with:
    - workingDirectory="/path/to/your/project"
@@ -261,6 +315,7 @@ The separate Subtask interface has been replaced by the unified Task model. Lega
    ```
 
 2. **Add Enhanced Tasks**
+
    ```
    Use create_task with:
    - workingDirectory="/path/to/your/project"
@@ -275,6 +330,7 @@ The separate Subtask interface has been replaced by the unified Task model. Lega
    ```
 
 3. **Break Down Tasks**
+
    ```
    Use create_task with parentId for nested tasks:
    - workingDirectory="/path/to/your/project"
@@ -288,6 +344,7 @@ The separate Subtask interface has been replaced by the unified Task model. Lega
    ```
 
 4. **Track Progress**
+
    ```
    Use update_task to mark items as completed and manage status
    Use list_tasks with showHierarchy=true to view progress in tree format
@@ -297,6 +354,7 @@ The separate Subtask interface has been replaced by the unified Task model. Lega
 ### Agent Memories Workflow
 
 1. **Create a Memory**
+
    ```
    Use create_memory with:
    - workingDirectory="/path/to/your/project"
@@ -307,6 +365,7 @@ The separate Subtask interface has been replaced by the unified Task model. Lega
    ```
 
 2. **Search Memories**
+
    ```
    Use search_memories with:
    - workingDirectory="/path/to/your/project"
@@ -317,6 +376,7 @@ The separate Subtask interface has been replaced by the unified Task model. Lega
    ```
 
 3. **List and Manage**
+
    ```
    Use list_memories to view all memories
    Use update_memory to modify existing memories (title, content, metadata, category)
@@ -337,6 +397,7 @@ The separate Subtask interface has been replaced by the unified Task model. Lega
 - **Backup-friendly**: Simple file-based storage for easy backup and migration
 
 ### Storage Structure
+
 ```
 your-project/
 ├── .agentic-tools-mcp/
@@ -355,7 +416,9 @@ your-project/
 ```
 
 ### Working Directory Parameter
+
 All MCP tools require a `workingDirectory` parameter that specifies:
+
 - Where to store the `.agentic-tools-mcp/` folder (in project-specific mode)
 - Which project's task and memory data to access
 - Enables multiple projects to have separate task lists and memory stores
@@ -363,6 +426,7 @@ All MCP tools require a `workingDirectory` parameter that specifies:
 **Note**: When the server is started with the `--claude` flag, the `workingDirectory` parameter is ignored and a global user directory is used instead (`~/.agentic-tools-mcp/` on macOS/Linux or `C:\Users\{username}\.agentic-tools-mcp\` on Windows).
 
 ### Benefits of Project-Specific Storage
+
 - **Git Integration**: Task and memory data can be committed with your code
 - **Team Collaboration**: Share task lists and agent memories via version control
 - **Project Isolation**: Each project has its own task management and memory system
@@ -384,6 +448,7 @@ All MCP tools require a `workingDirectory` parameter that specifies:
 ## Development
 
 ### Building from Source
+
 ```bash
 git clone <repository>
 cd agentic-tools-mcp
@@ -393,6 +458,7 @@ npm start
 ```
 
 ### Project Structure
+
 ```
 src/
 ├── features/
@@ -417,16 +483,19 @@ src/
 ### Common Issues
 
 **"Working directory does not exist"**
+
 - Ensure the path exists and is accessible
 - Use absolute paths for reliability
 - Check directory permissions
 
 **"Text search returns no results"** (Agent Memories)
+
 - Try using different keywords or phrases
 - Check that memories contain the search terms
 - Verify that the query content matches memory content
 
 **"Memory files not found"** (Agent Memories)
+
 - Ensure the working directory exists and is writable
 - Check that the .agentic-tools-mcp/memories directory was created
 
@@ -434,33 +503,39 @@ src/
 
 See [CHANGELOG.md](CHANGELOG.md) for detailed version history and release notes.
 
-### Current Version: 1.8.2
-- 🚨 **CRITICAL FIX**: Removed deprecated legacy subtask tools to prevent data corruption
-- 🔒 **Data Integrity**: Legacy subtask tools (`create_subtask`, `list_subtasks`, `get_subtask`, `update_subtask`, `delete_subtask`) removed
-- ✅ **Migration Complete**: Use unified `create_task` with `parentId` for all nested tasks
-- ✅ **Unlimited Hierarchy**: Full support for tasks at any nesting depth using `parentId`
-- 🚀 **NEW: Unified Task Model**: Single task interface supporting unlimited nesting depth (v1.8.0)
+### Current Version: 1.9.0
+
+- 📊 **NEW: Dashboard Integration**: Launch interactive Kanban board with `--dashboard` flag
+- 🎯 **Interactive Kanban Board**: Drag & drop tasks between columns (To Do, In Progress, Blocked, Done)
+- 🔧 **Full Task Management UI**: Create, update, and delete tasks with visual interface
+- 📈 **Real-Time Monitoring**: Live metrics, logs, and instance status
+- 🚀 **Seamless Launch**: Single command starts both backend and frontend servers
+- ⚙️ **Customizable Port**: Use `--dashboard-port` to configure backend port
 
 ## Acknowledgments
 
 We're grateful to the open-source community and the following projects that make this MCP server possible:
 
 ### Core Technologies
+
 - **[@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/typescript-sdk)** - The foundation for MCP server implementation
 - **[Node.js File System](https://nodejs.org/api/fs.html)** - Reliable file-based storage for memory persistence
 - **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript development
 - **[Node.js](https://nodejs.org/)** - JavaScript runtime environment
 
 ### Development & Validation
+
 - **[Zod](https://zod.dev/)** - TypeScript-first schema validation for robust input handling
 - **[ESLint](https://eslint.org/)** - Code quality and consistency
 - **[Prettier](https://prettier.io/)** - Code formatting
 
 ### File Storage & Search
+
 - **JSON** - Simple, human-readable data format for memory storage
 - **Text Search** - Efficient content-based search across memory files
 
 ### Special Thanks
+
 - **Open Source Community** - For creating the tools and libraries that make this project possible
 
 ## License
@@ -472,6 +547,7 @@ MIT License - see LICENSE file for details.
 Contributions are welcome! Please feel free to submit issues and pull requests.
 
 ### Development Setup
+
 ```bash
 git clone <repository>
 cd agentic-tools-mcp
@@ -483,17 +559,20 @@ npm start
 ## Related Projects
 
 ### 🖥️ VS Code Extension
+
 **[Agentic Tools MCP Companion](https://github.com/Pimzino/agentic-tools-mcp-companion)** - A beautiful VS Code extension that provides a GUI interface for this MCP server.
 
 **Key Features:**
+
 - 🎯 **Visual Task Management**: Rich GUI with enhanced task metadata forms
 - 📝 **Enhanced Forms**: Priority, complexity, status, tags, and time tracking
 - 🎨 **Visual Indicators**: Status emojis, priority badges, and complexity indicators
 - 📊 **Rich Tooltips**: Complete task information on hover
 - 🔄 **Real-time Sync**: Instant synchronization with MCP server data
--  **Responsive Design**: Adaptive forms that work on different screen sizes
+- **Responsive Design**: Adaptive forms that work on different screen sizes
 
 **Perfect for:**
+
 - Visual task management and planning
 - Teams who prefer GUI interfaces
 - Project managers who need rich task metadata
@@ -504,12 +583,16 @@ npm start
 For issues and questions, please use the GitHub issue tracker.
 
 ### Documentation
+
 - 📖 **[API Reference](docs/API_REFERENCE.md)** - Complete tool documentation
 - 🧠 **[Agent Memories Guide](docs/AGENT_MEMORIES.md)** - Comprehensive memory system guide
 - 🚀 **[Quick Start: Memories](docs/QUICK_START_MEMORIES.md)** - Get started with agent memories
+- 📊 **[Dashboard Guide](docs/DASHBOARD_GUIDE.md)** - Interactive Kanban board user guide
 - 📋 **[Changelog](CHANGELOG.md)** - Version history and release notes
+- 🤖 **[AI Coding Agent Instructions](.github/copilot-instructions.md)** - Guidance for AI assistants working on this codebase
 
 ### Getting Help
+
 - 🐛 Report bugs via GitHub issues
 - 💡 Request features via GitHub discussions
 - 🖥️ **VS Code Extension Issues**: Report extension-specific issues at [agentic-tools-mcp-companion](https://github.com/Pimzino/agentic-tools-mcp-companion/issues)

@@ -5,19 +5,36 @@ import { join } from 'path';
  * Configuration for storage directory resolution
  */
 export interface StorageConfig {
-  /** Whether to use global user directory instead of project-specific directories */
+  /** Whether to use global directory mode (--claude flag) */
   useGlobalDirectory: boolean;
+  /** Whether to launch the dashboard (--dashboard flag) */
+  launchDashboard: boolean;
+  /** Dashboard port (--dashboard-port flag) */
+  dashboardPort: number;
 }
 
 /**
- * Parse command-line arguments to determine storage configuration
+ * Parse command-line arguments for storage configuration
  */
 export function parseCommandLineArgs(): StorageConfig {
   const args = process.argv.slice(2);
   const useGlobalDirectory = args.includes('--claude');
+  const launchDashboard = args.includes('--dashboard');
   
+  // Get dashboard port from --dashboard-port flag or default to 4800
+  let dashboardPort = 4800;
+  const portIndex = args.indexOf('--dashboard-port');
+  if (portIndex !== -1 && args[portIndex + 1]) {
+    const parsedPort = parseInt(args[portIndex + 1], 10);
+    if (!isNaN(parsedPort) && parsedPort > 0 && parsedPort < 65536) {
+      dashboardPort = parsedPort;
+    }
+  }
+
   return {
-    useGlobalDirectory
+    useGlobalDirectory,
+    launchDashboard,
+    dashboardPort,
   };
 }
 
