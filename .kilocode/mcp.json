@@ -5,6 +5,9 @@
             "args": [
                 "-y",
                 "@modelcontextprotocol/server-sequential-thinking"
+            ],
+            "alwaysAllow": [
+                "sequentialthinking"
             ]
         },
         "time": {
@@ -52,6 +55,31 @@
                 "--init",
                 "--pull=always",
                 "mcr.microsoft.com/playwright/mcp@sha256:48cfafeaaf213c618fff8d2e311f33b170dd1eab87a351260cdb9c24a785fc50"
+            ]
+        },
+        "agentic-tools": {
+            "command": "/home/scarecrow/.nvm/versions/node/v22.18.0/bin/agentic-tools-mcp",
+            "alwaysAllow": [
+                "list_projects",
+                "create_project",
+                "update_project",
+                "get_project",
+                "delete_project",
+                "list_tasks",
+                "create_task",
+                "get_task",
+                "create_memory",
+                "search_memories",
+                "get_memory",
+                "list_memories",
+                "update_memory",
+                "parse_prd",
+                "delete_memory",
+                "get_next_task_recommendation",
+                "analyze_task_complexity",
+                "infer_task_progress",
+                "research_task",
+                "generate_research_queries"
             ]
         }
     }

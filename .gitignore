@@ -79,6 +79,11 @@ test/test-data/
 *.tmp
 *.temp
 
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
 # Package lock files (choose one based on your preference)
 # package-lock.json  # Uncomment if using yarn
 # yarn.lock          # Uncomment if using npm
