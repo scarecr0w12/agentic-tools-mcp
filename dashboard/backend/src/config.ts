@@ -23,9 +23,10 @@ export interface DashboardConfig {
 }
 
 function buildDefaultInstance(): InstanceConfig {
-  args: process.env.MCP_ARGS?.split(',') ?? isNpmStart
+  const isNpmStart = process.env.npm_lifecycle_event === 'start';
+  const args: string[] = process.env.MCP_ARGS?.split(',') ?? (isNpmStart
     ? ['run', 'start']
-    : ['-y', '@scarecr0w12/agentic-tools-mcp'];
+    : ['-y', '@scarecr0w12/agentic-tools-mcp']);
 
   if (!args.includes('--stdio')) {
     args.push('--stdio');

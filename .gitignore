@@ -85,6 +85,25 @@ test/test-data/
 *.db
 *.db-shm
 *.db-wal
+*.sqlite
+*.sqlite3
+data/*.db
+data/*.sqlite
+
+# Redis dumps
+dump.rdb
+
+# Backup files
+*.backup
+backups/
+
+# SaaS-specific data
+data/
+uploads/
+temp/
+
+# Stripe webhook logs
+stripe-webhooks.log
 
 # Package lock files (choose one based on your preference)
 # package-lock.json  # Uncomment if using yarn

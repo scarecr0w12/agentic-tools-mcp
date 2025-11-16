@@ -1,613 +1,225 @@
-# Agentic Tools MCP Server
+# Agentic Tools Cloud
 
-[![npm version](https://badge.fury.io/js/@scarecr0w12%2Fagentic-tools-mcp.svg)](https://badge.fury.io/js/@scarecr0w12%2Fagentic-tools-mcp)
-[![npm downloads](https://img.shields.io/npm/dm/@scarecr0w12/agentic-tools-mcp.svg)](https://www.npmjs.com/package/@scarecr0w12/agentic-tools-mcp)
-[![GitHub stars](https://img.shields.io/github/stars/scarecr0w12/agentic-tools-mcp.svg)](https://github.com/scarecr0w12/agentic-tools-mcp/stargazers)
-[![GitHub license](https://img.shields.io/github/license/scarecr0w12/agentic-tools-mcp.svg)](https://github.com/scarecr0w12/agentic-tools-mcp/blob/main/LICENSE)
-[![Node.js Version](https://img.shields.io/node/v/@scarecr0w12/agentic-tools-mcp.svg)](https://nodejs.org/)
+> Multi-tenant SaaS platform for AI-powered task and memory management with real-time team collaboration
 
-A comprehensive Model Context Protocol (MCP) server providing AI assistants with powerful **advanced task management** and **agent memories** capabilities with **project-specific storage**.
+**Agentic Tools Cloud** is the hosted, multi-tenant version of the popular [agentic-tools-mcp](https://github.com/scarecr0w12/agentic-tools-mcp) local tool. Built from the ground up for teams and organizations, it provides powerful task management, agent memory storage, and real-time collaboration features through a modern HTTP/WebSocket API.
 
-## 🔗 Ecosystem
+## 🌟 Key Features
 
-This MCP server is part of a complete task and memory management ecosystem:
+### Multi-Tenant Architecture
+- **Organizations & Workspaces** - Organize teams with nested workspace structure
+- **Role-Based Access Control** - Owner, admin, member, and viewer roles
+- **Workspace Sharing** - Collaborate across teams with fine-grained permissions
+- **Data Isolation** - Complete tenant isolation at database level
 
-- **🖥️ [VS Code Extension](https://github.com/scarecr0w12/agentic-tools-mcp-companion)** - Beautiful GUI interface for managing tasks and memories directly in VS Code
-- **📊 Dashboard** - Interactive Kanban board for visual task management (launch with `--dashboard` flag)
-- **⚡ MCP Server** (this repository) - Advanced AI agent tools and API for intelligent task management
+### Task Management
+- **Unlimited Task Hierarchy** - Nest tasks infinitely with parent-child relationships
+- **Smart Dependencies** - Define task dependencies and automatic blocking
+- **Priority & Complexity** - Built-in priority (1-10) and complexity scoring
+- **Status Tracking** - pending, in-progress, blocked, done
+- **Bulk Operations** - Create tasks from PRD documents, import/export
 
-> **💡 Pro Tip**: Use all three together for the ultimate productivity experience! The VS Code extension provides a visual interface, the dashboard offers a web-based Kanban board, and the MCP server enables AI assistant integration with advanced features like PRD parsing, task recommendations, and research capabilities.
+### Agent Memories
+- **Searchable Knowledge Base** - Store and retrieve AI agent memories
+- **Category Organization** - Organize memories by category
+- **Full-Text Search** - Intelligent search with relevance scoring
+- **Unlimited Storage** - No limits on memory storage (paid plans)
 
-## Features
+### Real-Time Collaboration
+- **Live Updates** - See changes instantly via WebSocket
+- **Team Presence** - Know who's online in your workspace
+- **Comments & Mentions** - Discuss tasks with @mentions
+- **Activity Feed** - Complete audit trail of all changes
 
-### 🎯 Advanced Task Management System with Unlimited Hierarchy (v1.8.0)
+### Developer-Friendly API
+- **RESTful HTTP API** - Well-documented REST endpoints
+- **WebSocket Support** - Real-time event streaming
+- **OpenAPI Specification** - Auto-generated API docs
+- **SDK Support** - Official TypeScript/JavaScript SDK
 
-- **Projects**: Organize work into distinct projects with descriptions
-- **Unified Task Model**: Single task interface supporting unlimited nesting depth
-- **Unlimited Hierarchy**: Tasks → Subtasks → Sub-subtasks → infinite depth nesting
-- **Rich Features at All Levels**: Every task gets priority, complexity, dependencies, tags, and time tracking
-- **Parent-Child Relationships**: Flexible hierarchy organization with `parentId` field
-- **Level Tracking**: Automatic hierarchy level calculation and visual indicators
-- **Tree Visualization**: Comprehensive hierarchical tree display with unlimited depth
-- **Intelligent Dependencies**: Task dependency management with validation across hierarchy
-- **Priority & Complexity**: 1-10 scale prioritization and complexity estimation at every level
-- **Enhanced Status Tracking**: pending, in-progress, blocked, done status workflow
-- **Tag-Based Organization**: Flexible categorization and filtering
-- **Time Tracking**: Estimated and actual hours for project planning
-- **Automatic Migration**: Seamless upgrade from old 3-level to unlimited depth model
-- **Progress Tracking**: Monitor completion status at all hierarchy levels
-- **Project-Specific Storage**: Each working directory has isolated task data
-- **Git-Trackable**: Task data can be committed alongside your code
+## 🚀 Quick Start
 
-### 🧠 Agent Memories System
+### For End Users
 
-- **Persistent Memory**: Store and retrieve agent memories with titles and detailed content
-- **Intelligent Search**: Multi-field text search with relevance scoring across titles, content, and categories
-- **Smart Ranking**: Advanced scoring algorithm prioritizes title matches (60%), content matches (30%), and category bonuses (20%)
-- **Rich Metadata**: Flexible metadata system for enhanced context
-- **JSON Storage**: Individual JSON files organized by category, named after memory titles
-- **Project-Specific**: Isolated memory storage per working directory
+Sign up for a free account at [app.agentic-tools.cloud](https://app.agentic-tools.cloud)
 
-### 🔧 MCP Tools Available
-
-#### Project Management
-
-- `list_projects` - View all projects in a working directory
-- `create_project` - Create a new project in a working directory
-- `get_project` - Get detailed project information
-- `update_project` - Edit project name/description
-- `delete_project` - Delete project and all associated data
-
-#### Task Management (Unlimited Hierarchy v1.8.0)
-
-- `list_tasks` - View tasks in hierarchical tree format with unlimited depth visualization
-- `create_task` - Create tasks at any hierarchy level with `parentId` (supports unlimited nesting)
-- `get_task` - Get detailed task information including hierarchy relationships
-- `update_task` - Edit tasks, metadata, or move between hierarchy levels with `parentId`
-- `delete_task` - Delete task and all child tasks recursively
-- `move_task` - Dedicated tool for moving tasks within hierarchy structure
-- `migrate_subtasks` - Automatic migration tool for converting legacy subtasks to unified model
-
-#### Advanced Task Management (AI Agent Tools)
-
-- `parse_prd` - Parse Product Requirements Documents and automatically generate structured tasks
-- `get_next_task_recommendation` - Get intelligent task recommendations based on dependencies, priorities, and complexity
-- `analyze_task_complexity` - Analyze task complexity and suggest breaking down overly complex tasks
-- `infer_task_progress` - Analyze codebase to infer task completion status from implementation evidence
-- `research_task` - Guide AI agents to perform comprehensive web research with memory integration
-- `generate_research_queries` - Generate intelligent, targeted web search queries for task research
-
-#### Agent Memory Management
-
-- `create_memory` - Store new memories with title and detailed content
-- `search_memories` - Find memories using intelligent multi-field search with relevance scoring
-- `get_memory` - Get detailed memory information
-- `list_memories` - List memories with optional filtering
-- `update_memory` - Edit memory title, content, metadata, or categorization
-- `delete_memory` - Delete a memory (requires confirmation)
-
-**Important**: All tools require a `workingDirectory` parameter to specify where the data should be stored. This enables project-specific task and memory management.
-
-## Installation
-
-### Quick Start
+### For Self-Hosting
 
 ```bash
-npx -y @scarecr0w12/agentic-tools-mcp
-```
-
-### Global Installation
-
-Or install globally:
-
-```bash
-npm install -g @scarecr0w12/agentic-tools-mcp
-agentic-tools-mcp
-```
-
-## Usage
-
-### Storage Modes
-
-The MCP server supports two storage modes:
-
-#### 📁 Project-Specific Mode (Default)
-
-Data is stored in `.agentic-tools-mcp/` subdirectories within each project's working directory.
-
-```bash
-npx -y @scarecr0w12/agentic-tools-mcp
-```
-
-#### 📊 With Dashboard
-
-Launch the interactive Kanban board dashboard alongside the MCP server:
-
-**Launch with Dashboard**:
-
-```bash
-npx -y @scarecr0w12/agentic-tools-mcp --dashboard
-```
-
-The dashboard provides:
-
-- **Interactive Kanban Board** - Drag and drop tasks between columns (To Do, In Progress, Blocked, Done)
-- **Real-Time Metrics** - CPU and memory usage monitoring
-- **Live Logs** - View MCP server output and events
-- **Task Management** - Create, update, and delete tasks with full metadata
-- **Project Switching** - Easily switch between different projects
-
-Access the dashboard at:
-
-- Backend: `http://localhost:4800`
-- Frontend: `http://localhost:5173`
-
-You can customize the dashboard port:
-
-**Custom Dashboard Port**:
-
-```bash
-npx -y @scarecr0w12/agentic-tools-mcp --dashboard --dashboard-port 3000
-```
-
-#### 🌐 Global Directory Mode
-
-Use the `--claude` flag to store all data in a standardized global directory:
-
-- **Windows**: `C:\Users\{username}\.agentic-tools-mcp\`
-- **macOS/Linux**: `~/.agentic-tools-mcp/`
-
-```bash
-npx -y @scarecr0w12/agentic-tools-mcp --claude
-```
-
-**When to use `--claude` flag:**
-
-- With Claude Desktop client (non-project-specific usage)
-- When you want a single global workspace for all tasks and memories
-- For AI assistants that work across multiple projects
-
-**Note**: When using `--claude` flag, the `workingDirectory` parameter in all tools is ignored and the global directory is used instead.
-
-### With Claude Desktop
-
-#### Project-Specific Mode (Default)
-
-```json
-{
-  "mcpServers": {
-    "agentic-tools": {
-      "command": "npx",
-      "args": ["-y", "@scarecr0w12/agentic-tools-mcp"]
-    }
-  }
-}
-```
-
-#### Global Directory Mode (Recommended for Claude Desktop)
-
-```json
-{
-  "mcpServers": {
-    "agentic-tools": {
-      "command": "npx",
-      "args": ["-y", "@scarecr0w12/agentic-tools-mcp", "--claude"]
-    }
-  }
-}
-```
-
-**Note**: The server now includes both task management and agent memories features.
-
-### With AugmentCode
-
-#### Project-Specific Mode (Default)
-
-1. Open Augment Settings Panel (gear icon)
-2. Add MCP server:
-   - **Name**: `agentic-tools`
-   - **Command**: `npx -y @scarecr0w12/agentic-tools-mcp`
-3. Restart VS Code
-
-#### Global Directory Mode
-
-1. Open Augment Settings Panel (gear icon)
-2. Add MCP server:
-   - **Name**: `agentic-tools`
-   - **Command**: `npx -y @scarecr0w12/agentic-tools-mcp --claude`
-3. Restart VS Code
-
-**Features Available**: Task management, agent memories, and text-based search capabilities.
-
-### With VS Code Extension (Recommended)
-
-For the best user experience, install the [**Agentic Tools MCP Companion**](https://github.com/scarecr0w12/agentic-tools-mcp-companion) VS Code extension:
-
-1. Clone the companion extension repository
-2. Open it in VS Code and press `F5` to run in development mode
-3. Enjoy a beautiful GUI interface for all task and memory management
-
-**Benefits of using both together:**
-
-- 🎯 **Visual Task Management**: Rich forms with priority, complexity, status, tags, and time tracking
-- 🎨 **Enhanced UI**: Status emojis, priority badges, and visual indicators
-- 🔄 **Real-time Sync**: Changes in VS Code instantly available to AI assistants
-- 📁 **Project Integration**: Seamlessly integrated with your workspace
-- 🤖 **AI Collaboration**: Human planning with AI execution for optimal productivity
-
-### With Other MCP Clients
-
-The server uses STDIO transport and can be integrated with any MCP-compatible client:
-
-#### Project-Specific Mode
-
-```bash
-npx -y @scarecr0w12/agentic-tools-mcp
-```
-
-#### Global Directory Mode
-
-```bash
-npx -y @scarecr0w12/agentic-tools-mcp --claude
-```
-
-## Data Models
-
-### Project
-
-```typescript
-{
-  id: string;           // Unique identifier
-  name: string;         // Project name
-  description: string;  // Project overview
-  createdAt: string;    // ISO timestamp
-  updatedAt: string;    // ISO timestamp
-}
-```
-
-### Task (Unified Model v1.8.0 - Unlimited Hierarchy)
-
-```typescript
-{
-  id: string;                    // Unique identifier
-  name: string;                  // Task name
-  details: string;               // Enhanced description
-  projectId: string;             // Parent project reference
-  completed: boolean;            // Completion status
-  createdAt: string;             // ISO timestamp
-  updatedAt: string;             // ISO timestamp
-
-  // Unlimited hierarchy fields (v1.8.0)
-  parentId?: string;             // Parent task ID for unlimited nesting (NEW)
-  level?: number;                // Computed hierarchy level (0, 1, 2, etc.) (NEW)
-
-  // Enhanced metadata fields (from v1.7.0)
-  dependsOn?: string[];          // Task dependencies (IDs of prerequisite tasks)
-  priority?: number;             // Priority level (1-10, where 10 is highest)
-  complexity?: number;           // Complexity estimate (1-10, where 10 is most complex)
-  status?: string;               // Enhanced status: 'pending' | 'in-progress' | 'blocked' | 'done'
-  tags?: string[];               // Tags for categorization and filtering
-  estimatedHours?: number;       // Estimated time to complete (hours)
-  actualHours?: number;          // Actual time spent (hours)
-}
-```
-
-### Legacy Subtask (Deprecated in v1.8.0)
-
-The separate Subtask interface has been replaced by the unified Task model. Legacy subtasks are automatically migrated to tasks with `parentId` field. This ensures unlimited hierarchy depth while maintaining all rich features at every level.
-
-### Memory
-
-```typescript
-{
-  id: string;                    // Unique identifier
-  title: string;                 // Short title for file naming (max 50 characters)
-  content: string;               // Detailed memory content/text (no limit)
-  metadata: Record<string, any>; // Flexible metadata object
-  createdAt: string;            // ISO timestamp
-  updatedAt: string;            // ISO timestamp
-  category?: string;            // Optional categorization
-}
-```
-
-## Example Workflow
-
-1. **Create a Project**
-
-   ```
-   Use create_project with:
-   - workingDirectory="/path/to/your/project"
-   - name="Website Redesign"
-   - description="Complete overhaul of company website"
-   ```
-
-2. **Add Enhanced Tasks**
-
-   ```
-   Use create_task with:
-   - workingDirectory="/path/to/your/project"
-   - name="Design mockups"
-   - details="Create wireframes and high-fidelity designs"
-   - projectId="[project-id-from-step-1]"
-   - priority=8 (high priority)
-   - complexity=6 (above average complexity)
-   - status="pending"
-   - tags=["design", "ui", "mockups"]
-   - estimatedHours=16
-   ```
-
-3. **Break Down Tasks**
-
-   ```
-   Use create_task with parentId for nested tasks:
-   - workingDirectory="/path/to/your/project"
-   - name="Create wireframes"
-   - details="Sketch basic layout structure"
-   - projectId="[project-id-from-step-1]"
-   - parentId="[task-id-from-step-2]"  # Creates a subtask!
-   - priority=7
-   - complexity=4
-   - status="pending"
-   ```
-
-4. **Track Progress**
-
-   ```
-   Use update_task to mark items as completed and manage status
-   Use list_tasks with showHierarchy=true to view progress in tree format
-   (All with workingDirectory parameter)
-   ```
-
-### Agent Memories Workflow
-
-1. **Create a Memory**
-
-   ```
-   Use create_memory with:
-   - workingDirectory="/path/to/your/project"
-   - title="User prefers concise technical responses"
-   - content="The user has explicitly stated they prefer concise responses with technical explanations. They value brevity but want detailed technical information when relevant."
-   - metadata={"source": "conversation", "confidence": 0.9}
-   - category="user_preferences"
-   ```
-
-2. **Search Memories**
-
-   ```
-   Use search_memories with:
-   - workingDirectory="/path/to/your/project"
-   - query="user preferences responses"
-   - limit=5
-   - threshold=0.3
-   - category="user_preferences"
-   ```
-
-3. **List and Manage**
-
-   ```
-   Use list_memories to view all memories
-   Use update_memory to modify existing memories (title, content, metadata, category)
-   Use delete_memory to remove outdated memories
-   (All with workingDirectory parameter)
-   ```
-
-**📖 Quick Start**: See [docs/QUICK_START_MEMORIES.md](docs/QUICK_START_MEMORIES.md) for a step-by-step guide to agent memories.
-
-## Data Storage
-
-- **Project-specific**: Each working directory has its own isolated task and memory data
-- **File-based**: Task data stored in `.agentic-tools-mcp/tasks/`, memory data in `.agentic-tools-mcp/memories/`
-- **Git-trackable**: All data can be committed alongside your project code
-- **Persistent**: All data persists between server restarts
-- **Atomic**: All operations are atomic to prevent data corruption
-- **JSON Storage**: Simple file-based storage for efficient memory organization
-- **Backup-friendly**: Simple file-based storage for easy backup and migration
-
-### Storage Structure
-
-```
-your-project/
-├── .agentic-tools-mcp/
-│   ├── tasks/              # Task management data for this project
-│   │   └── tasks.json      # Projects, tasks, and subtasks data
-│   └── memories/           # JSON file storage for memories
-│       ├── preferences/    # User preferences category
-│       │   └── User_prefers_concise_technical_responses.json
-│       ├── technical/      # Technical information category
-│       │   └── React_TypeScript_project_with_strict_ESLint.json
-│       └── context/        # Context information category
-│           └── User_works_in_healthcare_needs_HIPAA_compliance.json
-├── src/
-├── package.json
-└── README.md
-```
-
-### Working Directory Parameter
-
-All MCP tools require a `workingDirectory` parameter that specifies:
-
-- Where to store the `.agentic-tools-mcp/` folder (in project-specific mode)
-- Which project's task and memory data to access
-- Enables multiple projects to have separate task lists and memory stores
-
-**Note**: When the server is started with the `--claude` flag, the `workingDirectory` parameter is ignored and a global user directory is used instead (`~/.agentic-tools-mcp/` on macOS/Linux or `C:\Users\{username}\.agentic-tools-mcp\` on Windows).
-
-### Benefits of Project-Specific Storage
-
-- **Git Integration**: Task and memory data can be committed with your code
-- **Team Collaboration**: Share task lists and agent memories via version control
-- **Project Isolation**: Each project has its own task management and memory system
-- **Multi-Project Workflow**: Work on multiple projects simultaneously with isolated memories
-- **Backup & Migration**: File-based storage travels with your code
-- **Text Search**: Simple content-based memory search for intelligent context retrieval
-- **Agent Continuity**: Persistent agent memories across sessions and deployments
-
-## Error Handling
-
-- **Validation**: All inputs are validated with comprehensive error messages
-- **Directory Validation**: Ensures working directory exists and is accessible
-- **Referential Integrity**: Prevents orphaned tasks/subtasks with cascade deletes
-- **Unique Names**: Enforces unique names within scope (project/task)
-- **Confirmation**: Destructive operations require explicit confirmation
-- **Graceful Degradation**: Detailed error messages for troubleshooting
-- **Storage Errors**: Clear messages when storage initialization fails
-
-## Development
-
-### Building from Source
-
-```bash
-git clone <repository>
-cd agentic-tools-mcp
+# Clone the repository
+git clone https://github.com/scarecr0w12/agentic-tools-cloud.git
+cd agentic-tools-cloud
+
+# Install dependencies
 npm install
-npm run build
-npm start
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Run database migrations
+npm run db:migrate
+
+# Start the server
+npm run dev
 ```
 
-### Project Structure
+The server will start on `http://localhost:3000` (configurable via `HTTP_PORT`).
 
-```
-src/
-├── features/
-│   ├── task-management/
-│   │   ├── tools/           # MCP tool implementations
-│   │   │   ├── projects/    # Project CRUD operations
-│   │   │   ├── tasks/       # Task CRUD operations
-│   │   │   └── subtasks/    # Subtask CRUD operations
-│   │   ├── models/          # TypeScript interfaces
-│   │   └── storage/         # Data persistence layer
-│   └── agent-memories/
-│       ├── tools/           # Memory MCP tool implementations
-│       │   └── memories/    # Memory CRUD operations
-│       ├── models/          # Memory TypeScript interfaces
-│       └── storage/         # JSON file storage implementation
-├── server.ts            # MCP server configuration
-└── index.ts             # Entry point
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**"Working directory does not exist"**
-
-- Ensure the path exists and is accessible
-- Use absolute paths for reliability
-- Check directory permissions
-
-**"Text search returns no results"** (Agent Memories)
-
-- Try using different keywords or phrases
-- Check that memories contain the search terms
-- Verify that the query content matches memory content
-
-**"Memory files not found"** (Agent Memories)
-
-- Ensure the working directory exists and is writable
-- Check that the .agentic-tools-mcp/memories directory was created
-
-## Version History
-
-See [CHANGELOG.md](CHANGELOG.md) for detailed version history and release notes.
-
-### Current Version: 1.9.0
-
-- 📊 **NEW: Dashboard Integration**: Launch interactive Kanban board with `--dashboard` flag
-- 🎯 **Interactive Kanban Board**: Drag & drop tasks between columns (To Do, In Progress, Blocked, Done)
-- 🔧 **Full Task Management UI**: Create, update, and delete tasks with visual interface
-- 📈 **Real-Time Monitoring**: Live metrics, logs, and instance status
-- 🚀 **Seamless Launch**: Single command starts both backend and frontend servers
-- ⚙️ **Customizable Port**: Use `--dashboard-port` to configure backend port
-
-## Acknowledgments
-
-### Original Author
-
-This project is a fork and continuation of the original work by **[Pimzino](https://github.com/Pimzino)**. We're grateful for their foundational work in creating this comprehensive MCP server for task management and agent memories.
-
-**Original Repository**: [pimzino/agentic-tools-mcp](https://github.com/pimzino/agentic-tools-mcp)
-
-### Open Source Community
-
-We're grateful to the open-source community and the following projects that make this MCP server possible:
-
-### Core Technologies
-
-- **[@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/typescript-sdk)** - The foundation for MCP server implementation
-- **[Node.js File System](https://nodejs.org/api/fs.html)** - Reliable file-based storage for memory persistence
-- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript development
-- **[Node.js](https://nodejs.org/)** - JavaScript runtime environment
-
-### Development & Validation
-
-- **[Zod](https://zod.dev/)** - TypeScript-first schema validation for robust input handling
-- **[ESLint](https://eslint.org/)** - Code quality and consistency
-- **[Prettier](https://prettier.io/)** - Code formatting
-
-### File Storage & Search
-
-- **JSON** - Simple, human-readable data format for memory storage
-- **Text Search** - Efficient content-based search across memory files
-
-### Special Thanks
-
-- **Open Source Community** - For creating the tools and libraries that make this project possible
-
-## License
-
-MIT License - see LICENSE file for details.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit issues and pull requests.
-
-### Development Setup
+### Docker Deployment
 
 ```bash
-git clone <repository>
-cd agentic-tools-mcp
-npm install
-npm run build
-npm start
+# Using docker-compose (recommended)
+docker-compose up -d
+
+# Or build and run manually
+docker build -t agentic-tools-cloud .
+docker run -p 3000:3000 -v ./data:/app/data agentic-tools-cloud
 ```
 
-## Related Projects
+## 📚 Documentation
 
-### 🖥️ VS Code Extension
+- [API Reference](./docs/API_REFERENCE.md) - Complete HTTP API documentation
+- [Architecture](./docs/ARCHITECTURE.md) - System design and technical details
+- [Authentication](./docs/AUTHENTICATION.md) - JWT auth and security
+- [Deployment Guide](./docs/DEPLOYMENT.md) - Production deployment instructions
+- [Multi-Tenancy](./docs/MULTI_TENANCY.md) - Tenant isolation architecture
 
-**[Agentic Tools MCP Companion](https://github.com/scarecr0w12/agentic-tools-mcp-companion)** - A beautiful VS Code extension that provides a GUI interface for this MCP server.
+## 🔑 Environment Variables
 
-**Key Features:****
+See [`.env.example`](./.env.example) for all configuration options. Key variables:
 
-- 🎯 **Visual Task Management**: Rich GUI with enhanced task metadata forms
-- 📝 **Enhanced Forms**: Priority, complexity, status, tags, and time tracking
-- 🎨 **Visual Indicators**: Status emojis, priority badges, and complexity indicators
-- 📊 **Rich Tooltips**: Complete task information on hover
-- 🔄 **Real-time Sync**: Instant synchronization with MCP server data
-- **Responsive Design**: Adaptive forms that work on different screen sizes
+```bash
+# HTTP Server
+HTTP_PORT=3000
+HTTP_HOST=0.0.0.0
 
-**Perfect for:**
+# Authentication
+JWT_SECRET=your-secret-key-here
+AUTH_REQUIRED=true
 
-- Visual task management and planning
-- Teams who prefer GUI interfaces
-- Project managers who need rich task metadata
-- Anyone who wants beautiful task organization in VS Code
+# Database
+DATABASE_URL=sqlite:///data/agentic-tools.db
 
-## Support
+# Redis (for caching and real-time)
+REDIS_URL=redis://localhost:6379
 
-For issues and questions, please use the GitHub issue tracker.
+# Billing (optional)
+STRIPE_SECRET_KEY=sk_test_...
+BILLING_ENABLED=false
+```
 
-### Documentation
+## 💰 Pricing Plans
 
-- 📖 **[API Reference](docs/API_REFERENCE.md)** - Complete tool documentation
-- 🧠 **[Agent Memories Guide](docs/AGENT_MEMORIES.md)** - Comprehensive memory system guide
-- 🚀 **[Quick Start: Memories](docs/QUICK_START_MEMORIES.md)** - Get started with agent memories
-- 📊 **[Dashboard Guide](docs/DASHBOARD_GUIDE.md)** - Interactive Kanban board user guide
-- 📋 **[Changelog](CHANGELOG.md)** - Version history and release notes
-- 🤖 **[AI Coding Agent Instructions](.github/copilot-instructions.md)** - Guidance for AI assistants working on this codebase
+### Free Tier
+- 1 workspace
+- 100 tasks per workspace
+- 50 memories
+- 100 API requests/hour
+- Community support
 
-### Getting Help
+### Pro - $29/month
+- 10 workspaces
+- Unlimited tasks & memories
+- 1,000 API requests/hour
+- Email support
+- Advanced analytics
 
-- 🐛 Report bugs via GitHub issues
-- 💡 Request features via GitHub discussions
-- 🖥️ **VS Code Extension Issues**: Report extension-specific issues at [agentic-tools-mcp-companion](https://github.com/scarecr0w12/agentic-tools-mcp-companion/issues)
+### Team - $99/month
+- 50 workspaces
+- Team collaboration features
+- 5,000 API requests/hour
+- Priority support
+- Audit logs
+
+### Enterprise - Custom
+- Unlimited workspaces
+- Dedicated infrastructure
+- Custom rate limits
+- SLA guarantees
+- SSO integration
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐     ┌─────────────────┐
+│   Web/Mobile    │     │   MCP Client    │
+│     Client      │     │  (Claude, etc)  │
+└────────┬────────┘     └────────┬────────┘
+         │                       │
+         │ HTTP/WebSocket        │ STDIO (compat)
+         │                       │
+┌────────▼───────────────────────▼────────┐
+│      Fastify HTTP/WebSocket Server      │
+│  ┌────────────────────────────────────┐ │
+│  │   Authentication & Authorization   │ │
+│  │        (JWT, RBAC, CSRF)           │ │
+│  └────────────────┬───────────────────┘ │
+│                   │                     │
+│  ┌────────────────▼───────────────────┐ │
+│  │        MCP Tool Layer (27+)        │ │
+│  │  (Projects, Tasks, Memories, etc)  │ │
+│  └────────────────┬───────────────────┘ │
+│                   │                     │
+│  ┌────────────────▼───────────────────┐ │
+│  │      Multi-Tenant Storage          │ │
+│  │   SQLite + Redis (tenant-scoped)   │ │
+│  └────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+```
+
+### Database Schema
+
+- **users** - User accounts with bcrypt password hashing
+- **organizations** - Top-level tenant entities
+- **workspaces** - Isolated environments within organizations
+- **projects** - Project containers for tasks
+- **tasks** - Hierarchical task tree with unlimited nesting
+- **memories** - Searchable agent memory storage
+
+All queries are tenant-scoped to ensure complete data isolation.
+
+## 🔒 Security
+
+- **Password Hashing** - bcrypt with cost factor 12
+- **JWT Tokens** - Secure access and refresh token flow
+- **CSRF Protection** - Enabled for browser clients
+- **Rate Limiting** - Per-user quotas based on plan
+- **Audit Logging** - Complete audit trail of all operations
+- **Data Isolation** - Strict tenant boundaries at database level
+
+## 🤝 Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
+## 📄 License
+
+This project is licensed under the AGPL-3.0 License - see the [LICENSE](./LICENSE) file for details.
+
+For commercial licensing options, please contact: [support@agentic-tools.cloud](mailto:support@agentic-tools.cloud)
+
+## 🔗 Related Projects
+
+- [agentic-tools-mcp](https://github.com/scarecr0w12/agentic-tools-mcp) - Local STDIO version for individual use
+- [agentic-tools-core](https://github.com/scarecr0w12/agentic-tools-core) - Shared tool interfaces (coming soon)
+
+## 📞 Support
+
+- **Documentation**: [docs.agentic-tools.cloud](https://docs.agentic-tools.cloud)
+- **Community Discord**: [discord.gg/agentic-tools](https://discord.gg/agentic-tools)
+- **Email Support**: [support@agentic-tools.cloud](mailto:support@agentic-tools.cloud)
+- **Bug Reports**: [GitHub Issues](https://github.com/scarecr0w12/agentic-tools-cloud/issues)
+
+## 🙏 Acknowledgments
+
+Built with:
+- [Fastify](https://fastify.dev) - Fast and low overhead web framework
+- [Socket.IO](https://socket.io) - Real-time bidirectional communication
+- [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) - SQLite driver
+- [Redis](https://redis.io) - In-memory data store
+- [Stripe](https://stripe.com) - Payment processing
+- [MCP SDK](https://github.com/modelcontextprotocol/sdk) - Model Context Protocol
+
+---
+
+**Made with ❤️ by the Agentic Tools team**
